@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api.auth import router as auth_router
+from app.api.chat_companion import router as chat_companion_router
+from app.api.personality import router as personality_router
 from app.api.storage import router as storage_router
 from app.api.users import router as users_router
 from app.core.config import get_settings
@@ -13,6 +15,8 @@ settings = get_settings()
 app = FastAPI(title=settings.app_name)
 app.add_middleware(CORSMiddleware, allow_origins=list(settings.cors_allow_origins), allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 app.include_router(auth_router, prefix="/api/v1")
+app.include_router(chat_companion_router, prefix="/api/v1")
+app.include_router(personality_router, prefix="/api/v1")
 app.include_router(storage_router, prefix="/api/v1")
 app.include_router(users_router, prefix="/api/v1")
 
